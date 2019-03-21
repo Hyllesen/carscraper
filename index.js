@@ -1,8 +1,10 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
+const express = require("express");
 const CraigslistCar = require("./model/CraiglistCar");
 const mongoDbUrl = require("./config/mongodb");
 const mongoose = require("mongoose");
+const app = express();
 
 const url = "https://sfbay.craigslist.org/d/cars-trucks/search/cta";
 
@@ -49,4 +51,11 @@ async function main() {
   }
 }
 
-main();
+app.get("/", async (req, res, next) => {
+  try {
+    await main();
+    return res.status(200).json("Cars scraped!");
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+});
