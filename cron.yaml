@@ -1,0 +1,4 @@
+cron:
+  - description: "car scraping every 10 minutes"
+    url: /
+    schedule: every 10 mins
